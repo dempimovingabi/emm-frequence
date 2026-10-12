@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a4d8f">
+<title>EMM-FREQUENCE</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<div id="splash" class="splash">
+  <img src="logos/logo.png" alt="Logo" class="logo-splash" onerror="this.style.display='none'">
+  <h1 class="splash-title">EMM-FREQUENCE</h1>
+  <div class="loader"></div>
+</div>
+
+<div id="loginScreen" class="screen hidden">
+  <div class="login-box">
+    <img src="logos/logo.png" class="logo-login" onerror="this.style.display='none'">
+    <h2>EMM-FREQUENCE</h2>
+    <p class="subtitle">Système de gestion des fréquences</p>
+    <input type="text" id="loginUser" placeholder="Nom d'utilisateur">
+    <input type="password" id="loginPass" placeholder="Mot de passe">
+    <button class="btn-primary" onclick="login()">Se connecter</button>
+    <p class="error" id="loginError"></p>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header class="topbar">
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <h1>EMM-FREQUENCE</h1>
+    <button class="logout-btn" onclick="logout()">⏻</button>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="user-info">
+      <strong id="currentUserName"></strong>
+      <span id="currentUserRole"></span>
+    </div>
+    <nav>
+      <a onclick="showPage('home')">🏠 Accueil</a>
+      <a onclick="showPage('freqJournaliere')">📅 Fréquence Journalière</a>
+      <a onclick="showPage('freqMensuelle')">📊 Fréquence Mensuelle</a>
+      <a onclick="showPage('entites')">🏛️ Entités</a>
+      <a onclick="showPage('rapports')">📄 Rapports</a>
+      <a onclick="showPage('utilisateurs')" id="menuUsers">👥 Utilisateurs</a>
+      <a onclick="showPage('config')">⚙️ Configuration</a>
+    </nav>
+  </aside>
+
+  <main id="main" class="main"></main>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
