@@ -43,24 +43,20 @@
     <button class="btn-logout" onclick="logout()" title="Se déconnecter">⏻</button>
   </header>
 
-  <!-- MENU LATÉRAL -->
   <div id="sideMenu" class="side-menu">
     <div class="menu-header"><h2>Menu Principal</h2></div>
-    
     <div class="menu-section">
       <div class="menu-title">📈 RAPPORT DIFFUSION</div>
       <button class="menu-item" onclick="switchModule('diffusion')">📊 Accueil Diffusion</button>
       <button class="menu-item" onclick="switchTabDiffusion('frequence')">📝 Saisie Fréquence</button>
       <button class="menu-item" onclick="switchTabDiffusion('rapports')">📄 Rapports Diffusion</button>
     </div>
-
     <div class="menu-section">
       <div class="menu-title">🔢 RAPPORT NUMÉRIQUE</div>
       <button class="menu-item" onclick="switchModule('numerique')">📊 Accueil Numérique</button>
       <button class="menu-item" onclick="switchTabNumerique('saisie')">📝 Saisie Numérique</button>
       <button class="menu-item" onclick="switchTabNumerique('rapports')">📄 Rapports Numériques</button>
     </div>
-
     <div class="menu-section">
       <div class="menu-title">⚙️ ADMINISTRATION</div>
       <button class="menu-item" onclick="switchModule('admin')">⚙️ Paramètres & Admin</button>
@@ -70,34 +66,20 @@
 
   <!-- ================= MODULE DIFFUSION ================= -->
   <div id="module-diffusion" class="main-tab-content active">
-    
-    <!-- ACCUEIL DIFFUSION -->
     <div id="diff-accueil" class="sub-tab active">
       <div class="card">
         <h3>📢 Annonces</h3>
         <div id="announcementsBox" class="announcements"><p>Aucune annonce.</p></div>
       </div>
-      <div class="card">
-        <h3>👋 Bienvenue sur le Rapport Diffusion</h3>
-        <div id="welcomeBox"></div>
-      </div>
-      <div class="card">
-        <h3>📊 Tableau de bord Diffusion</h3>
-        <div id="dashboardDiffusionBox"></div>
-      </div>
+      <div class="card"><h3>👋 Bienvenue sur le Rapport Diffusion</h3><div id="welcomeBox"></div></div>
+      <div class="card"><h3>📊 Tableau de bord Diffusion</h3><div id="dashboardDiffusionBox"></div></div>
     </div>
 
-    <!-- SAISIE DIFFUSION -->
     <div id="diff-frequence" class="sub-tab">
-      
       <div class="card">
         <h3>➕ Enregistrer une entité</h3>
         <div class="input-group"><label>Type d'entité</label>
-          <select id="jTypeEntite">
-            <option>Jorhei Center</option>
-            <option>Unité religieuse</option>
-            <option>Foyer de lumière</option>
-          </select>
+          <select id="jTypeEntite"><option>Jorhei Center</option><option>Unité religieuse</option><option>Foyer de lumière</option></select>
         </div>
         <div class="input-group"><label>Nom de l'entité</label><input type="text" id="jNomEntite" placeholder="Ex : KELE-KELE"></div>
         <div class="input-group"><label>Nom du responsable</label><input type="text" id="jResponsable"></div>
@@ -108,19 +90,12 @@
       <div class="card">
         <h3>🔍 Filtre des entités</h3>
         <div class="input-group">
-          <select id="filtreEntites" onchange="afficherListeEntites()">
-            <option value="actif">Actives uniquement</option>
-            <option value="archive">Archivées uniquement</option>
-            <option value="tous">Toutes</option>
-          </select>
+          <select id="filtreEntites" onchange="afficherListeEntites()"><option value="actif">Actives uniquement</option><option value="archive">Archivées uniquement</option><option value="tous">Toutes</option></select>
         </div>
         <div class="input-group"><label>Recherche</label><input type="text" id="searchEntiteListe" placeholder="Nom entité..." oninput="afficherListeEntites()"></div>
       </div>
 
-      <div class="card">
-        <h3>📋 Liste des entités</h3>
-        <div id="listeEntites"></div>
-      </div>
+      <div class="card"><h3>📋 Liste des entités</h3><div id="listeEntites"></div></div>
 
       <div class="card">
         <h3>📝 Participation journalière</h3>
@@ -136,40 +111,24 @@
       <div class="card">
         <h3>🔍 Filtre des participations</h3>
         <div class="input-group">
-          <select id="filtreParticipations" onchange="afficherJournaliere()">
-            <option value="actif">Actives uniquement</option>
-            <option value="archive">Archivées uniquement</option>
-            <option value="tous">Toutes</option>
-          </select>
+          <select id="filtreParticipations" onchange="afficherJournaliere()"><option value="actif">Actives uniquement</option><option value="archive">Archivées uniquement</option><option value="tous">Toutes</option></select>
         </div>
       </div>
 
-      <div class="card">
-        <h3>📋 Relevé de pointage journalier</h3>
-        <div id="listeJournaliere"></div>
-      </div>
+      <div class="card"><h3>📋 Relevé de pointage journalier</h3><div id="listeJournaliere"></div></div>
 
-      <!-- FICHE MENSUELLE DIFFUSION -->
       <div class="card">
         <h3>📆 Fiche mensuelle (Diffusion)</h3>
         <div class="input-group"><label>Entité</label><select id="mEntite"></select></div>
         <div class="input-group"><label>Mois</label>
-          <select id="mMois">
-            <option>Janvier</option><option>Février</option><option>Mars</option>
-            <option>Avril</option><option>Mai</option><option>Juin</option>
-            <option>Juillet</option><option>Août</option><option>Septembre</option>
-            <option>Octobre</option><option>Novembre</option><option>Décembre</option>
-          </select>
+          <select id="mMois"><option>Janvier</option><option>Février</option><option>Mars</option><option>Avril</option><option>Mai</option><option>Juin</option><option>Juillet</option><option>Août</option><option>Septembre</option><option>Octobre</option><option>Novembre</option><option>Décembre</option></select>
         </div>
         <div class="input-group"><label>Année</label><input type="number" id="mAnnee" value="2026"></div>
         <div class="input-group"><label>Responsable</label><input type="text" id="mResponsable"></div>
         <h4>Présentation</h4>
         <div class="input-group"><label>Nombre d'Encadreurs</label><input type="number" id="mEncadreurs" value="0"></div>
         <div class="input-group"><label>Jour réunion d'évaluation</label>
-          <select id="mJourReunion">
-            <option>Lundi</option><option>Mardi</option><option>Mercredi</option>
-            <option>Jeudi</option><option>Vendredi</option><option>Samedi</option><option>Dimanche</option>
-          </select>
+          <select id="mJourReunion"><option>Lundi</option><option>Mardi</option><option>Mercredi</option><option>Jeudi</option><option>Vendredi</option><option>Samedi</option><option>Dimanche</option></select>
         </div>
         <div class="input-group"><label>Membres actifs</label><input type="number" id="mMembresActifs" value="0"></div>
         <div class="input-group"><label>Sympathisants</label><input type="number" id="mSympathisants" value="0"></div>
@@ -218,27 +177,16 @@
         <div class="input-group"><label>Nom entité</label><input type="text" id="searchFreq" placeholder="Rechercher..."></div>
         <div class="input-group"><label>Année</label><input type="text" id="searchFreqAnnee" placeholder="Ex : 2026"></div>
         <div class="input-group"><label>Mois</label>
-          <select id="searchFreqMois">
-            <option value="">-- Tous --</option>
-            <option>Janvier</option><option>Février</option><option>Mars</option>
-            <option>Avril</option><option>Mai</option><option>Juin</option>
-            <option>Juillet</option><option>Août</option><option>Septembre</option>
-            <option>Octobre</option><option>Novembre</option><option>Décembre</option>
-          </select>
+          <select id="searchFreqMois"><option value="">-- Tous --</option><option>Janvier</option><option>Février</option><option>Mars</option><option>Avril</option><option>Mai</option><option>Juin</option><option>Juillet</option><option>Août</option><option>Septembre</option><option>Octobre</option><option>Novembre</option><option>Décembre</option></select>
         </div>
         <div class="input-group"><label>Statut</label>
-          <select id="searchFreqStatut">
-            <option value="actif">Actives uniquement</option>
-            <option value="archive">Archivées uniquement</option>
-            <option value="tous">Toutes</option>
-          </select>
+          <select id="searchFreqStatut"><option value="actif">Actives uniquement</option><option value="archive">Archivées uniquement</option><option value="tous">Toutes</option></select>
         </div>
         <button class="btn-secondary" onclick="rechercherFreqAvance()">🔍 Rechercher</button>
         <button class="btn-secondary" onclick="reinitialiserRechercheFreq()">🔄 Réinitialiser</button>
       </div>
     </div>
 
-    <!-- RAPPORTS DIFFUSION -->
     <div id="diff-rapports" class="sub-tab">
       <div class="card">
         <h3>📊 Rapports Module Diffusion</h3>
@@ -259,30 +207,16 @@
 
   <!-- ================= MODULE NUMÉRIQUE ================= -->
   <div id="module-numerique" class="main-tab-content">
-    
-    <!-- ACCUEIL NUMÉRIQUE -->
     <div id="num-accueil" class="sub-tab active">
-      <div class="card">
-        <h3>👋 Bienvenue sur le Rapport Numérique</h3>
-        <div id="welcomeBoxNum"></div>
-      </div>
-      <div class="card">
-        <h3>📊 Tableau de bord Numérique</h3>
-        <div id="dashboardNumBox"></div>
-      </div>
+      <div class="card"><h3>👋 Bienvenue sur le Rapport Numérique</h3><div id="welcomeBoxNum"></div></div>
+      <div class="card"><h3>📊 Tableau de bord Numérique</h3><div id="dashboardNumBox"></div></div>
     </div>
 
-    <!-- SAISIE NUMÉRIQUE -->
     <div id="num-saisie" class="sub-tab">
-      
       <div class="card">
         <h3>➕ Enregistrer une entité</h3>
         <div class="input-group"><label>Type d'entité</label>
-          <select id="nTypeEntite">
-            <option>Jorhei Center</option>
-            <option>Unité religieuse</option>
-            <option>Foyer de lumière</option>
-          </select>
+          <select id="nTypeEntite"><option>Jorhei Center</option><option>Unité religieuse</option><option>Foyer de lumière</option></select>
         </div>
         <div class="input-group"><label>Nom de l'entité</label><input type="text" id="nNomEntite" placeholder="Ex : KELE-KELE"></div>
         <div class="input-group"><label>Nom du responsable</label><input type="text" id="nResponsable"></div>
@@ -293,44 +227,31 @@
       <div class="card">
         <h3>🔍 Filtre des entités</h3>
         <div class="input-group">
-          <select id="filtreEntitesNum" onchange="afficherListeEntitesNum()">
-            <option value="actif">Actives uniquement</option>
-            <option value="archive">Archivées uniquement</option>
-            <option value="tous">Toutes</option>
-          </select>
+          <select id="filtreEntitesNum" onchange="afficherListeEntitesNum()"><option value="actif">Actives uniquement</option><option value="archive">Archivées uniquement</option><option value="tous">Toutes</option></select>
         </div>
         <div class="input-group"><label>Recherche</label><input type="text" id="searchEntiteListeNum" placeholder="Nom entité..." oninput="afficherListeEntitesNum()"></div>
       </div>
 
-      <div class="card">
-        <h3>📋 Liste des entités</h3>
-        <div id="listeEntitesNum"></div>
-      </div>
+      <div class="card"><h3>📋 Liste des entités</h3><div id="listeEntitesNum"></div></div>
 
-      <!-- FICHE MENSUELLE NUMÉRIQUE -->
       <div class="card">
         <h3>📆 Fiche mensuelle (Numérique)</h3>
         <div class="input-group"><label>Entité</label><select id="nEntite"></select></div>
         <div class="input-group"><label>Mois</label>
-          <select id="nMois">
-            <option>Janvier</option><option>Février</option><option>Mars</option>
-            <option>Avril</option><option>Mai</option><option>Juin</option>
-            <option>Juillet</option><option>Août</option><option>Septembre</option>
-            <option>Octobre</option><option>Novembre</option><option>Décembre</option>
-          </select>
+          <select id="nMois"><option>Janvier</option><option>Février</option><option>Mars</option><option>Avril</option><option>Mai</option><option>Juin</option><option>Juillet</option><option>Août</option><option>Septembre</option><option>Octobre</option><option>Novembre</option><option>Décembre</option></select>
         </div>
         <div class="input-group"><label>Année</label><input type="number" id="nAnnee" value="2026"></div>
         <div class="input-group"><label>Responsable</label><input type="text" id="nResponsableFiche"></div>
 
-        <h4>Membres Baptisés</h4>
-        <div class="input-group"><label>Membres Baptisés</label><input type="number" id="nBaptises" value="0"></div>
-        <div class="input-group"><label>Membres actifs</label><input type="number" id="nMembresActifs" value="0"></div>
-        <div class="input-group"><label>Membres inactifs</label><input type="number" id="nMembresInactifs" value="0"></div>
+        <h4>Membres</h4>
+        <div class="input-group"><label>Baptisés</label><input type="number" id="nBaptises" value="0"></div>
+        <div class="input-group"><label>Actifs</label><input type="number" id="nMembresActifs" value="0"></div>
+        <div class="input-group"><label>Inactifs</label><input type="number" id="nMembresInactifs" value="0"></div>
         <div class="input-group"><label>Initiés du mois</label><input type="number" id="nInities" value="0"></div>
-        <div class="input-group"><label>Membres entrés</label><input type="number" id="nMembresEntres" value="0"></div>
-        <div class="input-group"><label>Membres sortis du pays</label><input type="number" id="nMembresSortis" value="0"></div>
-        <div class="input-group"><label>Membres récupérés</label><input type="number" id="nMembresRecuperes" value="0"></div>
-        <div class="input-group"><label>Membres décédés</label><input type="number" id="nMembresDecedes" value="0"></div>
+        <div class="input-group"><label>Entrés</label><input type="number" id="nMembresEntres" value="0"></div>
+        <div class="input-group"><label>Sortis du pays</label><input type="number" id="nMembresSortis" value="0"></div>
+        <div class="input-group"><label>Récupérés</label><input type="number" id="nMembresRecuperes" value="0"></div>
+        <div class="input-group"><label>Décédés</label><input type="number" id="nMembresDecedes" value="0"></div>
 
         <h4>Fréquentation Mensuelle</h4>
         <div class="input-group"><label>Membres</label><input type="number" id="nFreqMembres" value="0"></div>
@@ -379,27 +300,16 @@
         <div class="input-group"><label>Nom entité</label><input type="text" id="searchNum" placeholder="Rechercher..."></div>
         <div class="input-group"><label>Année</label><input type="text" id="searchNumAnnee" placeholder="Ex : 2026"></div>
         <div class="input-group"><label>Mois</label>
-          <select id="searchNumMois">
-            <option value="">-- Tous --</option>
-            <option>Janvier</option><option>Février</option><option>Mars</option>
-            <option>Avril</option><option>Mai</option><option>Juin</option>
-            <option>Juillet</option><option>Août</option><option>Septembre</option>
-            <option>Octobre</option><option>Novembre</option><option>Décembre</option>
-          </select>
+          <select id="searchNumMois"><option value="">-- Tous --</option><option>Janvier</option><option>Février</option><option>Mars</option><option>Avril</option><option>Mai</option><option>Juin</option><option>Juillet</option><option>Août</option><option>Septembre</option><option>Octobre</option><option>Novembre</option><option>Décembre</option></select>
         </div>
         <div class="input-group"><label>Statut</label>
-          <select id="searchNumStatut">
-            <option value="actif">Actives uniquement</option>
-            <option value="archive">Archivées uniquement</option>
-            <option value="tous">Toutes</option>
-          </select>
+          <select id="searchNumStatut"><option value="actif">Actives uniquement</option><option value="archive">Archivées uniquement</option><option value="tous">Toutes</option></select>
         </div>
         <button class="btn-secondary" onclick="rechercherNumAvance()">🔍 Rechercher</button>
         <button class="btn-secondary" onclick="reinitialiserRechercheNum()">🔄 Réinitialiser</button>
       </div>
     </div>
 
-    <!-- RAPPORTS NUMÉRIQUES -->
     <div id="num-rapports" class="sub-tab">
       <div class="card">
         <h3>📊 Rapports Module Numérique</h3>
@@ -458,6 +368,51 @@
 
 <button id="installBtn" class="install-btn" style="display:none" onclick="installApp()">📲 Installer</button>
 
+<!-- PANNEAU PERSONNALISATION PDF -->
+<div id="pdfOptionsModal" class="pdf-modal" style="display:none">
+  <div class="pdf-modal-content">
+    <h3>🎨 Personnaliser le PDF</h3>
+    <div class="input-group">
+      <label>Police</label>
+      <select id="pdfPolice">
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Taille</label>
+      <select id="pdfTaille">
+        <option value="9">Petite (9pt)</option>
+        <option value="11" selected>Moyenne (11pt)</option>
+        <option value="13">Grande (13pt)</option>
+        <option value="15">Très grande (15pt)</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Style</label>
+      <select id="pdfStyle">
+        <option value="normal">Normal</option>
+        <option value="bold">Gras</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Interligne</label>
+      <select id="pdfInterligne">
+        <option value="1.1">Serré</option>
+        <option value="1.4" selected>Normal</option>
+        <option value="1.8">Aéré</option>
+      </select>
+    </div>
+    <div class="pdf-modal-actions">
+      <button class="btn-secondary" onclick="closePdfModal()">Annuler</button>
+      <button class="btn-primary" onclick="genererPDFAvecOptions()">📕 Générer le PDF</button>
+    </div>
+  </div>
+</div>
+
 <script src="db.js"></script>
 <script src="app.js"></script>
 <script>
@@ -466,4 +421,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-        </html>
+          </html>
