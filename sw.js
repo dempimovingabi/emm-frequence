@@ -1,69 +1,16 @@
-const CACHE_NAME = 'emm-freq-cache-v1';
+const CACHE_NAME = 'emm-rapports-v3-' + Date.now();
+const URLS = ['./','./index.html','./style.css','./app.js','./db.js','./manifest.json','./icon-192.png','./icon-512.png'];
 
-// Liste des fichiers à mettre en cache pour le fonctionnement hors ligne
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-  // Ajoutez ici vos fichiers CSS et JS principaux, ex:
-  // '/css/style.css',
-  // '/js/app.js'
-];
-
-// 1. Installation du Service Worker et mise en cache des fichiers
-self.addEventListener('install', event => {
-  self.skipWaiting(); // Force le nouveau SW à prendre le contrôle immédiatement
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Ouverture du cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
+self.addEventListener('install', function(event) {
+  event.waitUntil(caches.open(CACHE_NAME).then(function(cache) { return cache.addAll(URLS).catch(function() { return Promise.all(URLS.map(function(url) { return cache.add(url).catch(function() {}); })); }); }));
+  self.skipWaiting();
 });
 
-// 2. Activation et nettoyage des anciens caches
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Suppression de l\'ancien cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-  return self.clients.claim();
+self.addEventListener('activate', function(event) {
+  event.waitUntil(caches.keys().then(function(keys) { return Promise.all(keys.filter(function(k) { return k !== CACHE_NAME; }).map(function(k) { return caches.delete(k); })); }));
+  self.clients.claim();
 });
 
-// 3. Interception des requêtes : sert le cache ou va sur le réseau
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Si le fichier est dans le cache, on le renvoie
-        if (response) {
-          return response;
-        }
-        // Sinon, on va le chercher sur le réseau
-        return fetch(event.request).then(
-          function(response) {
-            // Vérifier si nous avons reçu une réponse valide
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            // Mettre en cache la nouvelle ressource pour la prochaine fois
-            var responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              });
-            return response;
-          }
-        );
-      })
-  );
+self.addEventListener('fetch', function(event) {
+  event.respondWith(caches.match(event.request).then(function(cached) { if (cached) return cached; return fetch(event.request).then(function(response) { if (response && response.status === 200 && event.request.method === 'GET') { var rc = response.clone(); caches.open(CACHE_NAME).then(function(cache) { cache.put(event.request, rc); }); } return response; }).catch(function() { return caches.match('./index.html'); }); }));
 });
