@@ -1,63 +1,290 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Remplacez #4a148c par la couleur de votre choix (celle de votre thème EMM-FREQ) -->
-    <meta name="theme-color" content="#4a148c">
-    
-    <title>EMM-FREQUENCE</title>
-    
-    <!-- Lien vers le manifeste (doit être au même niveau que index.html) -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Votre feuille de style -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Vos scripts CDN (j'ai gardé les lignes que vous aviez, mais vous devez remettre les URLs complètes si elles sont coupées) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/..."></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/..."></script>
-    <script src="https://cdn.jsdelivr.net/npm/..."></script>
-    <script src="https://cdn.jsdelivr.net/npm/..."></script>
-    <script src="https://cdn.jsdelivr.net/npm/..."></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a6e2c">
+<title>EMM FRÉQUENCE</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ============================================== -->
-    <!-- DÉBUT DE VOTRE CONTENU (Splash screen, etc.)  -->
-    <!-- ============================================== -->
-    
-    <div id="splash" class="splash">
-        <img src="logos/logo.png" alt="Logo EMM-FREQUENCE">
-        <!-- Ajoutez ici le reste de votre contenu splash (titre, chargement, etc.) -->
+<!-- SPLASH -->
+<div id="splashScreen" class="screen active">
+  <div class="splash-content">
+    <img src="logo.png" alt="EMM" class="splash-logo" onerror="this.style.display='none'; document.getElementById('splashFallback').style.display='flex';">
+    <div id="splashFallback" class="splash-fallback" style="display:none">EMM</div>
+    <h1 class="splash-title">ÉGLISE MESSIANIQUE MONDIALE</h1>
+    <h2 class="splash-subtitle">EMM FRÉQUENCE</h2>
+    <div class="splash-loader"></div>
+  </div>
+</div>
+
+<!-- CONNEXION -->
+<div id="loginScreen" class="screen">
+  <div class="login-box">
+    <img src="logo.png" alt="EMM" class="login-logo" onerror="this.style.display='none'; document.getElementById('loginFallback').style.display='flex';">
+    <div id="loginFallback" class="login-fallback" style="display:none">EMM</div>
+    <h1>ÉGLISE MESSIANIQUE MONDIALE</h1>
+    <h2>EMM FRÉQUENCE</h2>
+    <p class="subtitle">Gestion des Fréquences</p>
+    <div class="input-group"><label>Nom d'utilisateur</label><input type="text" id="loginUsername" placeholder="Entrez votre nom d'utilisateur" autocomplete="username"></div>
+    <div class="input-group"><label>Mot de passe</label><input type="password" id="loginPassword" placeholder="Entrez votre mot de passe" autocomplete="current-password" onkeypress="if(event.key==='Enter')login()"></div>
+    <button class="btn-primary" onclick="login()">Se connecter</button>
+    <p id="loginError" class="error-msg"></p>
+  </div>
+</div>
+
+<!-- ACCUEIL -->
+<div id="mainScreen" class="screen">
+  <header class="app-header">
+    <img src="logo.png" class="header-logo" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="header-logo-fallback" style="display:none">EMM</div>
+    <div><h1>EMM FRÉQUENCE</h1><p id="userRoleLabel">Gestion des Fréquences</p></div>
+    <button class="btn-logout" onclick="logout()" title="Se déconnecter">⏻</button>
+  </header>
+
+  <div class="main-tabs">
+    <button class="main-tab active" onclick="switchMainTab('general', this)">📊 Général</button>
+    <button class="main-tab" onclick="switchMainTab('frequence', this)">📈 Fréquence</button>
+    <button class="main-tab" onclick="switchMainTab('admin', this)">⚙️ Admin</button>
+  </div>
+
+  <!-- ONGLET GÉNÉRAL -->
+  <div id="tab-general" class="main-tab-content active">
+    <div class="card">
+      <h3>📢 Annonces</h3>
+      <div id="announcementsBox" class="announcements"><p>Aucune annonce.</p></div>
+    </div>
+    <div class="card">
+      <h3>👋 Bienvenue</h3>
+      <div id="welcomeBox"></div>
+    </div>
+    <div class="card">
+      <h3>📊 Tableau de bord</h3>
+      <div id="dashboardBox"></div>
+    </div>
+    <div class="card">
+      <h3>🌍 Rapport Général Consolidé</h3>
+      <button class="btn-primary" onclick="rapportGeneralConsolide()">📊 Générer</button>
+      <button class="btn-secondary" onclick="imprimerGeneral()">🖨️ Imprimer</button>
+      <button class="btn-secondary" onclick="exporterWordGeneral()">📄 Word</button>
+      <button class="btn-secondary" onclick="exporterPDFGeneral()">📕 PDF</button>
+      <button class="btn-secondary" onclick="partagerGeneral()">📤 Envoyer</button>
+      <div id="rapportGeneralBox"></div>
+    </div>
+    <div class="card" style="text-align:center">
+      <button class="btn-secondary" onclick="logout()" style="background:#ffebee;color:#c62828;border-color:#c62828">🚪 Se déconnecter</button>
+    </div>
+  </div>
+
+  <!-- ONGLET FRÉQUENCE -->
+  <div id="tab-frequence" class="main-tab-content">
+    <div class="card">
+      <h3>➕ Enregistrer une entité</h3>
+      <div class="input-group"><label>Type d'entité</label>
+        <select id="jTypeEntite">
+          <option>Jorhei Center</option>
+          <option>Unité religieuse</option>
+          <option>Foyer de lumière</option>
+        </select>
+      </div>
+      <div class="input-group"><label>Nom de l'entité</label><input type="text" id="jNomEntite" placeholder="Ex : KELE-KELE"></div>
+      <div class="input-group"><label>Nom du responsable</label><input type="text" id="jResponsable"></div>
+      <button class="btn-primary" onclick="ajouterEntite()">Enregistrer</button>
+      <button class="btn-secondary" onclick="reinitialiserFormEntite()">🔄 Réinitialiser</button>
     </div>
 
-    <!-- ============================================== -->
-    <!-- AJOUTEZ ICI LE RESTE DE VOTRE APPLICATION     -->
-    <!-- (Menus, tableaux de bord, formulaires, etc.)  -->
-    <!-- ============================================== -->
-    
-    
+    <div class="card">
+      <h3>🔍 Filtre des entités</h3>
+      <div class="input-group">
+        <select id="filtreEntites" onchange="afficherListeEntites()">
+          <option value="actif">Actives uniquement</option>
+          <option value="archive">Archivées uniquement</option>
+          <option value="tous">Toutes</option>
+        </select>
+      </div>
+      <div class="input-group"><label>Recherche</label><input type="text" id="searchEntiteListe" placeholder="Nom entité..." oninput="afficherListeEntites()"></div>
+    </div>
 
-    <!-- ============================================== -->
-    <!-- CODE DU SERVICE WORKER (À LAISSER TOUT EN BAS)-->
-    <!-- ============================================== -->
-    <script>
-      // Enregistrement du Service Worker pour le mode hors ligne et la rapidité
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          // On cherche le fichier sw.js à la racine du projet
-          navigator.serviceWorker.register('sw.js') 
-            .then(registration => {
-              console.log('✅ Service Worker enregistré avec succès. Scope:', registration.scope);
-            })
-            .catch(error => {
-              console.error('❌ Échec de l\'enregistrement du Service Worker:', error);
-            });
-        });
-      }
-    </script>
+    <div class="card">
+      <h3>📋 Liste des entités</h3>
+      <div id="listeEntites"></div>
+    </div>
 
+    <div class="card">
+      <h3>📝 Participation journalière</h3>
+      <div class="input-group"><label>Entité</label><select id="jEntiteSelect"></select></div>
+      <div class="input-group"><label>Date</label><input type="date" id="jDate"></div>
+      <div class="input-group"><label>Membres</label><input type="number" id="jMembres" value="0"></div>
+      <div class="input-group"><label>Sympathisants</label><input type="number" id="jSympathisants" value="0"></div>
+      <div class="input-group"><label>Nouveaux venus</label><input type="number" id="jNouveaux" value="0"></div>
+      <button class="btn-primary" onclick="enregistrerParticipation()">Enregistrer</button>
+      <button class="btn-secondary" onclick="reinitialiserFormParticipation()">🔄 Réinitialiser</button>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Filtre des participations</h3>
+      <div class="input-group">
+        <select id="filtreParticipations" onchange="afficherJournaliere()">
+          <option value="actif">Actives uniquement</option>
+          <option value="archive">Archivées uniquement</option>
+          <option value="tous">Toutes</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📋 Relevé de pointage journalier</h3>
+      <div id="listeJournaliere"></div>
+    </div>
+
+    <div class="card">
+      <h3>📆 Fiche mensuelle</h3>
+      <div class="input-group"><label>Entité</label><select id="mEntite"></select></div>
+      <div class="input-group"><label>Mois</label>
+        <select id="mMois">
+          <option>Janvier</option><option>Février</option><option>Mars</option>
+          <option>Avril</option><option>Mai</option><option>Juin</option>
+          <option>Juillet</option><option>Août</option><option>Septembre</option>
+          <option>Octobre</option><option>Novembre</option><option>Décembre</option>
+        </select>
+      </div>
+      <div class="input-group"><label>Année</label><input type="number" id="mAnnee" value="2026"></div>
+      <div class="input-group"><label>Responsable</label><input type="text" id="mResponsable"></div>
+      <h4>Présentation</h4>
+      <div class="input-group"><label>Nombre d'Encadreurs</label><input type="number" id="mEncadreurs" value="0"></div>
+      <div class="input-group"><label>Jour réunion d'évaluation</label>
+        <select id="mJourReunion">
+          <option>Lundi</option><option>Mardi</option><option>Mercredi</option>
+          <option>Jeudi</option><option>Vendredi</option><option>Samedi</option><option>Dimanche</option>
+        </select>
+      </div>
+      <div class="input-group"><label>Membres actifs</label><input type="number" id="mMembresActifs" value="0"></div>
+      <div class="input-group"><label>Sympathisants</label><input type="number" id="mSympathisants" value="0"></div>
+      <h4>Fréquentation culte mensuel</h4>
+      <div class="input-group"><label>Membres</label><input type="number" id="mFMembres" value="0"></div>
+      <div class="input-group"><label>Sympathisants</label><input type="number" id="mFSympathisants" value="0"></div>
+      <div class="input-group"><label>Nouveaux venus</label><input type="number" id="mFNouveaux" value="0"></div>
+      <h4>Activités</h4>
+      <div class="input-group"><label>Foyers Lumière</label><input type="number" id="mFoyersLumiere" value="0"></div>
+      <div class="input-group"><label>Avec Goshintai</label><input type="number" id="mAvecGoshintai" value="0"></div>
+      <div class="input-group"><label>Sans Goshintai</label><input type="number" id="mSansGoshintai" value="0"></div>
+      <div class="input-group"><label>Foyers sympathisants</label><input type="number" id="mFoyersSymp" value="0"></div>
+      <div class="input-group"><label>Fleurs distribuées</label><input type="number" id="mFleurs" value="0"></div>
+      <div class="input-group"><label>Potagers</label><input type="number" id="mPotagers" value="0"></div>
+      <div class="input-group"><label>Total potagers</label><input type="number" id="mTotalPotagers" value="0"></div>
+      <div class="input-group"><label>Maisons ouvertes</label><input type="number" id="mMaisonsOuvertes" value="0"></div>
+      <div class="input-group"><label>Témoignages</label><input type="number" id="mTemoignages" value="0"></div>
+      <h4>Confirmation</h4>
+      <div class="input-group"><label>Candidats Goshintai</label><input type="number" id="mCandGoshintai" value="0"></div>
+      <div class="input-group"><label>Confirmés initiation</label><input type="number" id="mConfInit" value="0"></div>
+      <div class="input-group"><label>Confirmés ré-initiation</label><input type="number" id="mConfReinit" value="0"></div>
+      <div class="input-group"><label>Confirmés Shoku</label><input type="number" id="mConfShoku" value="0"></div>
+      <div class="input-group"><label>Confirmés Kannon</label><input type="number" id="mConfKannon" value="0"></div>
+      <div class="input-group"><label>Confirmés Mitamaya</label><input type="number" id="mConfMitamaya" value="0"></div>
+      <h4>Assistance religieuse</h4>
+      <div class="input-group"><label>Maisons membres</label><input type="number" id="mAssistMembres" value="0"></div>
+      <div class="input-group"><label>Maisons sympathisants</label><input type="number" id="mAssistSymp" value="0"></div>
+      <div class="input-group"><label>Concessions</label><input type="number" id="mConcessions" value="0"></div>
+      <div class="input-group"><label>Terrains</label><input type="number" id="mTerrains" value="0"></div>
+      <div class="input-group"><label>Campagnes</label><input type="number" id="mCampagnes" value="0"></div>
+      <h4>Formation</h4>
+      <div class="input-group"><label>Cours enseignements</label><input type="number" id="mCoursEns" value="0"></div>
+      <div class="input-group"><label>Thèmes</label><textarea id="mThemes" rows="3"></textarea></div>
+      <div class="input-group"><label>Cours fleurs</label><input type="number" id="mCoursFleurs" value="0"></div>
+      <h4>Grâces reçues</h4><textarea id="mGraces" rows="3"></textarea>
+      <h4>Points à améliorer</h4><textarea id="mPoints" rows="3"></textarea>
+      <h4>Solutions proposées</h4><textarea id="mSolutions" rows="3"></textarea>
+      <h4>Objectifs</h4><textarea id="mObjectifs" rows="3"></textarea>
+      <h4>Actions</h4><textarea id="mActions" rows="3"></textarea>
+      <button class="btn-primary" onclick="enregistrerFicheMensuelle()">Enregistrer</button>
+      <button class="btn-secondary" onclick="reinitialiserFormFiche()">🔄 Réinitialiser</button>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Recherche fiche mensuelle</h3>
+      <div class="input-group"><label>Nom entité</label><input type="text" id="searchFreq" placeholder="Rechercher..."></div>
+      <div class="input-group"><label>Année</label><input type="text" id="searchFreqAnnee" placeholder="Ex : 2026"></div>
+      <div class="input-group"><label>Mois</label>
+        <select id="searchFreqMois">
+          <option value="">-- Tous --</option>
+          <option>Janvier</option><option>Février</option><option>Mars</option>
+          <option>Avril</option><option>Mai</option><option>Juin</option>
+          <option>Juillet</option><option>Août</option><option>Septembre</option>
+          <option>Octobre</option><option>Novembre</option><option>Décembre</option>
+        </select>
+      </div>
+      <div class="input-group"><label>Statut</label>
+        <select id="searchFreqStatut">
+          <option value="actif">Actives uniquement</option>
+          <option value="archive">Archivées uniquement</option>
+          <option value="tous">Toutes</option>
+        </select>
+      </div>
+      <button class="btn-secondary" onclick="rechercherFreqAvance()">🔍 Rechercher</button>
+      <button class="btn-secondary" onclick="reinitialiserRechercheFreq()">🔄 Réinitialiser</button>
+    </div>
+
+    <div class="card">
+      <h3>📊 Rapports Module I</h3>
+      <button class="btn-primary" onclick="rapportFreqGlobal()">📊 Global</button>
+      <button class="btn-secondary" onclick="rapportFreqDetaille()">📋 Détaillé</button>
+      <button class="btn-secondary" onclick="imprimerRapportFreq()">🖨️ Imprimer</button>
+      <button class="btn-secondary" onclick="exporterWordFreq()">📄 Word</button>
+      <button class="btn-secondary" onclick="exporterPDFFreq()">📕 PDF</button>
+      <button class="btn-secondary" onclick="partagerRapportFreq()">📤 Envoyer</button>
+      <div id="rapportFreqBox"></div>
+    </div>
+  </div>
+
+  <!-- ONGLET ADMIN -->
+  <div id="tab-admin" class="main-tab-content">
+    <div class="card">
+      <h3>👥 Gestion des utilisateurs</h3>
+      <div class="input-group"><label>Nom</label><input type="text" id="uNom"></div>
+      <div class="input-group"><label>Mot de passe</label><input type="text" id="uPass"></div>
+      <div class="input-group"><label>Rôle</label>
+        <select id="uRole"><option value="user">Utilisateur</option><option value="admin">Administrateur</option></select>
+      </div>
+      <button class="btn-primary" onclick="ajouterUtilisateur()">Ajouter</button>
+      <button class="btn-secondary" onclick="reinitialiserFormUtilisateur()">🔄 Réinitialiser</button>
+      <h4>Liste des utilisateurs</h4>
+      <div id="listeUtilisateurs"></div>
+    </div>
+
+    <div class="card">
+      <h3>📢 Publier une annonce</h3>
+      <textarea id="annonceText" rows="3"></textarea>
+      <button class="btn-primary" onclick="publierAnnonce()">Publier</button>
+      <button class="btn-secondary" onclick="reinitialiserFormAnnonce()">🔄 Réinitialiser</button>
+    </div>
+
+    <div class="card">
+      <h3>💾 Sauvegarde / Restauration</h3>
+      <button class="btn-secondary" onclick="exporterDonnees()">📤 Exporter</button>
+      <div class="input-group"><label>Collez ici un JSON</label><textarea id="importText" rows="4"></textarea></div>
+      <button class="btn-primary" onclick="restaurerTexte()">🔄 Restaurer</button>
+      <div class="input-group" style="margin-top:10px"><label>Ou fichier .json</label><input type="file" id="importFile" accept=".json,.txt" onchange="importerDonnees(event)"></div>
+    </div>
+
+    <div class="card">
+      <h3>🗑️ Danger</h3>
+      <button class="btn-secondary" style="background:#ffebee;color:#c62828;border-color:#c62828" onclick="toutEffacer()">⚠️ Tout effacer</button>
+    </div>
+  </div>
+
+</div>
+
+<button id="installBtn" class="install-btn" style="display:none" onclick="installApp()">📲 Installer</button>
+
+<script src="db.js"></script>
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function(e) { console.log('SW:', e); });
+}
+</script>
 </body>
-</html>
+                             </html>
