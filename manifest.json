@@ -1,20 +1,23 @@
 {
-  "name": "EMM-FREQ - Système de gestion des fréquences",
-  "short_name": "EMM-FREQ",
-  "description": "Système de gestion des fréquences",
-  "start_url": "/",
+  "name": "EMM RAPPORTS - Diffusion & Numérique",
+  "short_name": "EMM RAPPORTS",
+  "description": "Application de gestion des rapports de diffusion et numérique",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4a148c",
+  "orientation": "portrait",
+  "background_color": "#0a6e2c",
+  "theme_color": "#0a6e2c",
+  "lang": "fr",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-512x512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
